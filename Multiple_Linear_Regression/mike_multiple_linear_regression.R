@@ -21,7 +21,11 @@ test_set = subset(dataset, split == FALSE)
 regressor = lm(formula = Profit ~ .,
                data = training_set)    # "." tells R to use all independent variablesß
 summary(regressor)
+print('WE WONT USE THE ABOVE REGRESSOR -')
 
 # self-teaching backwards elim in R
 regressor_backwards_elim = lm(formula = Profit ~ ., data = na.omit(training_set))
 step(regressor_backwards_elim, direction = 'backward', trace=FALSE)
+
+# predicting the Test Results
+y_pred = predict(regressor_backwards_elim, newdata = test_set)
