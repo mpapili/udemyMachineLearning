@@ -50,3 +50,10 @@ print(evens)
 
 # IS A VALUE IN A VECTOR?
 sprintf("4 in evens %s", 4 %in% evens)
+
+# repeat values X times
+repeatedList = rep(x=2, times=5, each=2)
+print(repeatedList)
+
+repeatedList = rep(x=c(1,2,3), times=2, each=2)
+print(repeatedList)

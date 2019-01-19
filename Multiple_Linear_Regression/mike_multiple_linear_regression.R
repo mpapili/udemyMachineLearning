@@ -29,3 +29,41 @@ step(regressor_backwards_elim, direction = 'backward', trace=FALSE)
 
 # predicting the Test Results
 y_pred = predict(regressor_backwards_elim, newdata = test_set)
+
+
+### backwards elimination by-hand
+regressor = lm(formula = Profit ~ R.D.Spend + Administration + Marketing.Spend + State,
+                              data = dataset)
+print('lets select 5% p=0.05 as our significance level to aim for')
+print(summary(regressor))
+print('state2 and state3 are so awful we can safely remove both at once')
+regressor = lm(formula = Profit ~ R.D.Spend + Administration + Marketing.Spend,
+               data = dataset)
+print(summary(regressor))
+print('administration is getting kicked out!')
+regressor = lm(formula = Profit ~ R.D.Spend + Marketing.Spend,
+               data = dataset)
+print(summary(regressor))
+print('our model is most-powerful with only RND spend as an independnet variable')
+
+
+### automatic backwards elimination
+
+backElim <- function(x, sl) {
+  numVars = length(x)
+  for (i in c(1:numVars)){   # for i = each index in vector 1-len(x)
+    regressor = lm(formula = Profit ~ ., data=x) # make our regressor
+    maxVar = max(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"])
+    if (maxVar > sl){
+      j = which(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"] == maxVar)
+      x = x[, -j]   # strip out index j
+    }
+    numVars = numVars - 1
+  }
+  return(regressor)
+}
+SL = 0.05
+dataset = dataset[, c(1,2,3,4,5)] # all rows, each column by-index
+regressor = backElim(dataset, SL)
+print(summary(regressor))
+print(coef(summary(regressor)))
