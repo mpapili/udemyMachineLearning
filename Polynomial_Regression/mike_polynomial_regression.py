@@ -49,3 +49,12 @@ plt.title('Salary vs Levels (Polynomial Regressor)')
 plt.xlabel = 'position level'
 plt.ylabel = 'salary'
 plt.show()
+
+
+# Predicting a new result with Linear Regression (bad)
+y_pred = linReg.predict( np.array( [ [ 6.5 ] ] ) )  # create 1d array
+print(f'linear regressor suggests someone at level 6.5 would make {y_pred}')   # what should someone at level 6.5 make?
+
+# Predicting a new result with Polynomial Regression (good)
+y_pred = lin_reg_2.predict(poly_reg.fit_transform( np.array( [ [ 6.5 ] ] )))
+print(f'polynomial regressor suggests someone at level 6.5 would make {y_pred}')
