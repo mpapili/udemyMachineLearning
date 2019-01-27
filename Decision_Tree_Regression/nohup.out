@@ -1,0 +1,2 @@
+
+(gedit:28650): Gdk-CRITICAL **: 19:57:03.131: gdk_monitor_get_geometry: assertion 'GDK_IS_MONITOR (monitor)' failed
